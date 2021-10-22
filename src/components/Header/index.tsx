@@ -1,11 +1,15 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 
-const Index = () => {
-    return (
-        <div>
-            
-            </div>
-    );
-};
+import {WrapperHeaderStyled} from './style'
 
-export default Index;
+export const Header: React.FC = () => (
+    <WrapperHeaderStyled>
+        <Link to="/">
+            <li>Играть</li>
+        </Link>
+        <Link to="/records">
+            <li>Мои рекорды</li>
+        </Link>
+    </WrapperHeaderStyled>
+)
