@@ -13,10 +13,9 @@ interface IQuestion {
     ]
 }
 
-const arr: number[] = []
-
 const initialState = {
-    questions: []
+    questions: [],
+    isFetching: false
 }
 
 export interface Action {
@@ -27,13 +26,23 @@ export interface Action {
 export const question = (state = initialState, action: Action) => {
     switch (action.type) {
         case types.FETCHING_QUESTIONS_REQUEST: {
-            return {...state}
+            return {
+                ...state,
+                isFetching: true
+            }
         }
         case types.FETCHING_QUESTIONS_SUCCESS: {
-            return {...state}
+            return {
+                ...state,
+                questions: action.payload,
+                isFetching: false
+            }
         }
         case types.FETCHING_QUESTIONS_ERROR: {
-            return {...state}
+            return {
+                ...state,
+                isFetching: false
+            }
         }
         default: {
             return {...state}

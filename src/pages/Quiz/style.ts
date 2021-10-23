@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const WrapperQuizStyled = styled.div`
+export const WrapperSettingsQuizStyled = styled.div`
   padding: 20px 40px;
   background-color: white;
   text-align: left;
@@ -9,7 +9,7 @@ export const WrapperQuizStyled = styled.div`
   border-radius: 5px;
 
 `
-export const WrapperRadioStyled = styled.div`
+export const WrapperStyled = styled.div`
   display: flex;
   justify-content: space-evenly;
   margin-left: 20px;

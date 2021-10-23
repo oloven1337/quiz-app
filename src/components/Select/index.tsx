@@ -2,7 +2,7 @@ import React from 'react';
 
 interface Props {
     arr: string[],
-    handleChange:(e: React.ChangeEvent<HTMLInputElement>) => void
+    handleChange?:(e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export const Select: React.FC<Props> = ({arr, handleChange}) => {

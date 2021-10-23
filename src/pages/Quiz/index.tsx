@@ -1,9 +1,13 @@
 import React from 'react';
-import {WrapperQuizStyled, WrapperRadioStyled} from "./style";
+
 import {RadioButton} from "../../components/RadioButton";
 import {Select} from "../../components/Select";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {getQuestions} from "../../__data__/actions/questions";
+import {questionsSelector} from "../../__data__/selectors/selectors";
+import {Question} from '../Question/'
+
+import {WrapperSettingsQuizStyled, WrapperStyled} from "./style";
 
 export const Quiz: React.FC = () => {
     const [numberQuestion, setNumberQuestion] = React.useState<number>(0)
@@ -11,6 +15,7 @@ export const Quiz: React.FC = () => {
     const [difficulty, setDifficulty] = React.useState<string>('')
 
     const dispatch = useDispatch()
+    const questions = useSelector(questionsSelector)
 
     const handleChangeCount = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNumberQuestion(+e.target.value)
@@ -24,45 +29,57 @@ export const Quiz: React.FC = () => {
         setDifficulty(e.target.value)
     }
 
-    const categoriesArr = [
-        'Sports',
-        'Art',
-        'History',
-        'Animals',
-    ]
+    const categoryValues: object = {
+        Sports: 21,
+        Art: 25,
+        History: 23,
+        Animals: 27,
+    }
+
     const difficultyArr = [
         'Easy',
         'Medium',
         'Hard'
     ]
 
-    const getQ = () => {
-        dispatch(getQuestions(numberQuestion, categories, difficulty))
+    const handlerGetQuestion = () => {
+        if (numberQuestion && categories && difficulty) {
+            const categoryName = Object.keys(categoryValues).indexOf(categories)
+            const categoryId = Object.values(categoryValues)[categoryName]
+            console.log(categories)
+            dispatch(getQuestions(numberQuestion, categoryId, difficulty))
+        } else {
+            console.log('заполнены не все поля')
+        }
+    }
+
+    if (questions.length !== 0) {
+        return <Question questions={questions}/>
     }
 
     return (
-        <WrapperQuizStyled>
-            <WrapperRadioStyled>
+        <WrapperSettingsQuizStyled>
+            <WrapperStyled>
                 <span>Количество вопросов:</span>
                 <div>
-                    <RadioButton value={10} handleChangeCountQuestion={handleChangeCount}/>
-                    <RadioButton value={20} handleChangeCountQuestion={handleChangeCount}/>
-                    <RadioButton value={30} handleChangeCountQuestion={handleChangeCount}/>
+                    <RadioButton name="countQuestion" value={10} handleChangeCountQuestion={handleChangeCount}/>
+                    <RadioButton name="countQuestion" value={20} handleChangeCountQuestion={handleChangeCount}/>
+                    <RadioButton name="countQuestion" value={30} handleChangeCountQuestion={handleChangeCount}/>
                 </div>
-            </WrapperRadioStyled>
-            <WrapperRadioStyled>
+            </WrapperStyled>
+            <WrapperStyled>
                 <span>Выберите категорию:</span>
                 <div>
-                    <Select handleChange={handleChangeCategories} arr={categoriesArr}/>
+                    <Select handleChange={handleChangeCategories} arr={Object.keys(categoryValues)}/>
                 </div>
-            </WrapperRadioStyled>
-            <WrapperRadioStyled>
+            </WrapperStyled>
+            <WrapperStyled>
                 <span>Выберите сложность:</span>
                 <div>
                     <Select handleChange={handleChangeDifficulty} arr={difficultyArr}/>
                 </div>
-            </WrapperRadioStyled>
-            <button onClick={getQ}>click</button>
-        </WrapperQuizStyled>
+            </WrapperStyled>
+            <button onClick={handlerGetQuestion}>Получить вопросы</button>
+        </WrapperSettingsQuizStyled>
     )
 }
