@@ -18,12 +18,12 @@ const initialState = {
     isFetching: false
 }
 
-export interface Action {
+export interface IAction {
     type: string,
     payload?: IQuestion[]
 }
 
-export const question = (state = initialState, action: Action) => {
+export const question = (state = initialState, action: IAction) => {
     switch (action.type) {
         case types.FETCHING_QUESTIONS_REQUEST: {
             return {

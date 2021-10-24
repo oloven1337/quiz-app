@@ -1,21 +1,19 @@
 import React from 'react';
+import {Link} from "react-router-dom";
 
 import {RadioButton} from "../../components/RadioButton";
 import {Select} from "../../components/Select";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {getQuestions} from "../../__data__/actions/questions";
-import {questionsSelector} from "../../__data__/selectors/selectors";
-import {Question} from '../Question/'
 
 import {WrapperSettingsQuizStyled, WrapperStyled} from "./style";
 
 export const Quiz: React.FC = () => {
     const [numberQuestion, setNumberQuestion] = React.useState<number>(0)
-    const [categories, setCategories] = React.useState<string>('')
-    const [difficulty, setDifficulty] = React.useState<string>('')
+    const [categories, setCategories] = React.useState<string>('Sports')
+    const [difficulty, setDifficulty] = React.useState<string>('Easy')
 
     const dispatch = useDispatch()
-    const questions = useSelector(questionsSelector)
 
     const handleChangeCount = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNumberQuestion(+e.target.value)
@@ -46,15 +44,10 @@ export const Quiz: React.FC = () => {
         if (numberQuestion && categories && difficulty) {
             const categoryName = Object.keys(categoryValues).indexOf(categories)
             const categoryId = Object.values(categoryValues)[categoryName]
-            console.log(categories)
             dispatch(getQuestions(numberQuestion, categoryId, difficulty))
         } else {
             console.log('заполнены не все поля')
         }
-    }
-
-    if (questions.length !== 0) {
-        return <Question questions={questions}/>
     }
 
     return (
@@ -79,7 +72,8 @@ export const Quiz: React.FC = () => {
                     <Select handleChange={handleChangeDifficulty} arr={difficultyArr}/>
                 </div>
             </WrapperStyled>
-            <button onClick={handlerGetQuestion}>Получить вопросы</button>
+            {/*<button onClick={handlerGetQuestion}>Получить вопросы</button>*/}
+            <Link to="/questions" onClick={handlerGetQuestion}>Получить вопросы</Link>
         </WrapperSettingsQuizStyled>
     )
 }
