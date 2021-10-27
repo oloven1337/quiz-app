@@ -1,15 +1,14 @@
 import React from 'react';
 import {Route} from 'react-router-dom'
+import {useSelector} from "react-redux";
 
 import {Records} from "./pages/Records";
 import {Quiz} from "./pages/Quiz";
-import {useSelector} from "react-redux";
-import {questionsSelector} from "./__data__/selectors/selectors";
+import {questionsSelector} from "./__data__/selectors/questions";
 import {Question} from "./pages/Question";
 
 export function App() {
     const questions = useSelector(questionsSelector)
-
     return (
         <>
             <Route path="/" exact component={Quiz}/>

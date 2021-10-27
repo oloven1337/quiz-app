@@ -12,11 +12,13 @@ export const Quiz: React.FC = () => {
     const [numberQuestion, setNumberQuestion] = React.useState<number>(0)
     const [categories, setCategories] = React.useState<string>('Sports')
     const [difficulty, setDifficulty] = React.useState<string>('Easy')
+    const [boolBtn, setBoolBtn] = React.useState<boolean>(true)
 
     const dispatch = useDispatch()
 
     const handleChangeCount = (e: React.ChangeEvent<HTMLInputElement>) => {
         setNumberQuestion(+e.target.value)
+        setBoolBtn(false)
     }
 
     const handleChangeCategories = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,8 +47,6 @@ export const Quiz: React.FC = () => {
             const categoryName = Object.keys(categoryValues).indexOf(categories)
             const categoryId = Object.values(categoryValues)[categoryName]
             dispatch(getQuestions(numberQuestion, categoryId, difficulty))
-        } else {
-            console.log('заполнены не все поля')
         }
     }
 
@@ -72,8 +72,9 @@ export const Quiz: React.FC = () => {
                     <Select handleChange={handleChangeDifficulty} arr={difficultyArr}/>
                 </div>
             </WrapperStyled>
-            {/*<button onClick={handlerGetQuestion}>Получить вопросы</button>*/}
-            <Link to="/questions" onClick={handlerGetQuestion}>Получить вопросы</Link>
+            <Link to="/questions" onClick={handlerGetQuestion}>
+                <button disabled={boolBtn}>Получить вопросы</button>
+            </Link>
         </WrapperSettingsQuizStyled>
     )
 }

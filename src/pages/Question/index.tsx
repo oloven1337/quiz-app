@@ -1,8 +1,10 @@
 import React from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import {RadioButton} from "../../components/RadioButton";
-import {setAnswers} from "../../__data__/actions/saveAnswers";
+import {setAnswers} from "../../__data__/actions/answers";
+import {answersLoaderSelector} from "../../__data__/selectors/questions";
+import {Result} from "../Result";
 
 interface IQuestion {
     question: string,
@@ -16,14 +18,14 @@ interface IProps {
 
 export const Question: React.FC<IProps> = ({questions}) => {
     const [countQuestions, setCountQuestions] = React.useState<number>(0)
-    const [userAnswer, setUserAnswer] = React.useState<string | null>(null)
+    const [userAnswer, setUserAnswer] = React.useState<string>('')
     // const [time, setTime] = React.useState<number>(5)
     // const [correctAnswerState, setCorrectAnswerState] = React.useState<string>('')
     // const [titleState, setTitleState] = React.useState<string>('')
-    const refInterval = React.useRef<number>()
+    // const refInterval = React.useRef<number>()
 
     const dispatch = useDispatch()
-
+    const answersLoader = useSelector(answersLoaderSelector())
     // React.useEffect(() => {
     //     //@ts-ignore
     //     refInterval.current = setInterval(() => {
@@ -50,6 +52,9 @@ export const Question: React.FC<IProps> = ({questions}) => {
     //     }
     // }, [refInterval])
 
+    React.useEffect(() => {
+    }, [countQuestions])
+
     if (countQuestions < questions.length) {
         const {
             question: questionTitle,
@@ -59,8 +64,8 @@ export const Question: React.FC<IProps> = ({questions}) => {
 
         const answers = [...incorrectAnswers, correctAnswer]
 
-        const handleSelection = (e: string) => {
-            setUserAnswer(e)
+        const handleSelection = (eValue: string) => {
+            setUserAnswer(eValue)
         }
 
         const handlerSetCount = (questionTitle: string) => {
@@ -70,8 +75,7 @@ export const Question: React.FC<IProps> = ({questions}) => {
             setCountQuestions(nextCount)
             // setCorrectAnswerState(correctAnswer)
             // setTitleState(questionTitle)
-            clearInterval(refInterval.current)
-            setUserAnswer(null)
+            // clearInterval(refInterval.current)
         }
         return (
             <div>
@@ -79,14 +83,18 @@ export const Question: React.FC<IProps> = ({questions}) => {
                 <button onClick={() => handlerSetCount(questionTitle)}>next</button>
                 <div>
                     {answers.map(answer => (
-                        //@ts-ignore
-                        <div key={answer} onChange={(e) => handleSelection(e.target.value)}>
+                        <div key={answer}
+                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSelection(e.target.value)}>
                             <RadioButton name="answers" key={answer} value={answer}/>
                         </div>
                     ))}
                 </div>
             </div>
         )
+    }
+
+    if (answersLoader) {
+        return <h1>loading...</h1>
     }
 
     if (questions.length === 0) {
@@ -96,6 +104,6 @@ export const Question: React.FC<IProps> = ({questions}) => {
     }
 
     return (
-        <h1>Вопросы закончились</h1>
+        <Result/>
     )
 }
