@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const WrapperSettingsQuizStyled = styled.div`
   padding: 20px 40px;
-  background-color: white;
+  background-color: #322736;
   text-align: left;
   margin: 0 auto;
   max-width: 600px;
@@ -11,6 +11,7 @@ export const WrapperSettingsQuizStyled = styled.div`
 `
 export const WrapperStyled = styled.div`
   display: flex;
+  align-items: center;
   justify-content: space-evenly;
   margin-left: 20px;
   padding: 6px;
@@ -22,4 +23,8 @@ export const WrapperStyled = styled.div`
   div {
     width: 200px;
   }
+`
+export const TextStyled = styled.h3`
+  margin: 0 10px 0 0;
+  color: white;
 `

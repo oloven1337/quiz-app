@@ -11,13 +11,15 @@ interface Props {
 export const RadioButton: React.FC<Props> = ({name, handleChangeCountQuestion, value}) => (
     <>
         <RadioStyled>
-            <span>{value}</span>
-            <input
-                name={name}
-                onChange={handleChangeCountQuestion}
-                value={value}
-                type="radio"
-            />
+            <label>
+                <input
+                    type="radio"
+                    name={name}
+                    onChange={handleChangeCountQuestion}
+                    value={value}
+                />
+                <span>{value}</span>
+            </label>
         </RadioStyled>
     </>
 )

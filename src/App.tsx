@@ -9,6 +9,7 @@ import {Question} from "./pages/Question";
 
 export function App() {
     const questions = useSelector(questionsSelector)
+
     return (
         <>
             <Route path="/" exact component={Quiz}/>

@@ -1,12 +1,13 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 
+import {Button} from "../../components/Button";
 import {RadioButton} from "../../components/RadioButton";
 import {Select} from "../../components/Select";
 import {useDispatch} from "react-redux";
 import {getQuestions} from "../../__data__/actions/questions";
 
-import {WrapperSettingsQuizStyled, WrapperStyled} from "./style";
+import {TextStyled, WrapperSettingsQuizStyled, WrapperStyled} from "./style";
 
 export const Quiz: React.FC = () => {
     const [numberQuestion, setNumberQuestion] = React.useState<number>(0)
@@ -53,7 +54,7 @@ export const Quiz: React.FC = () => {
     return (
         <WrapperSettingsQuizStyled>
             <WrapperStyled>
-                <span>Количество вопросов:</span>
+                <TextStyled>Количество вопросов:</TextStyled>
                 <div>
                     <RadioButton name="countQuestion" value={10} handleChangeCountQuestion={handleChangeCount}/>
                     <RadioButton name="countQuestion" value={20} handleChangeCountQuestion={handleChangeCount}/>
@@ -61,19 +62,19 @@ export const Quiz: React.FC = () => {
                 </div>
             </WrapperStyled>
             <WrapperStyled>
-                <span>Выберите категорию:</span>
+                <TextStyled>Выберите категорию:</TextStyled>
                 <div>
                     <Select handleChange={handleChangeCategories} arr={Object.keys(categoryValues)}/>
                 </div>
             </WrapperStyled>
             <WrapperStyled>
-                <span>Выберите сложность:</span>
+                <TextStyled>Выберите сложность:</TextStyled>
                 <div>
                     <Select handleChange={handleChangeDifficulty} arr={difficultyArr}/>
                 </div>
             </WrapperStyled>
-            <Link to="/questions" onClick={handlerGetQuestion}>
-                <button disabled={boolBtn}>Получить вопросы</button>
+            <Link to="/questions">
+                <Button handlerClick={handlerGetQuestion} disabled={boolBtn}>Получить вопросы</Button>
             </Link>
         </WrapperSettingsQuizStyled>
     )

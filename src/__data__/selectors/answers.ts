@@ -11,4 +11,4 @@ interface Answer {
     }
 }
 
-export const answersSelector = ((state: IState) => state)
+export const answersSelector = ((state: IState) => state.answers.answers)

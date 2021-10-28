@@ -1,10 +1,14 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 
+import {Result} from "../Result";
 import {RadioButton} from "../../components/RadioButton";
 import {setAnswers} from "../../__data__/actions/answers";
 import {answersLoaderSelector} from "../../__data__/selectors/questions";
-import {Result} from "../Result";
+
+import {WrapperAnswersItem, WrapperStyled} from "./style";
+import {Button} from "../../components/Button";
+import {Modal} from "../../components/Modal";
 
 interface IQuestion {
     question: string,
@@ -78,23 +82,25 @@ export const Question: React.FC<IProps> = ({questions}) => {
             // clearInterval(refInterval.current)
         }
         return (
-            <div>
+            <WrapperStyled>
                 <h4>{questionTitle}</h4>
-                <button onClick={() => handlerSetCount(questionTitle)}>next</button>
-                <div>
+                <WrapperAnswersItem>
                     {answers.map(answer => (
                         <div key={answer}
                              onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSelection(e.target.value)}>
                             <RadioButton name="answers" key={answer} value={answer}/>
                         </div>
                     ))}
-                </div>
-            </div>
+                </WrapperAnswersItem>
+                <Button handlerClick={() => handlerSetCount(questionTitle)}>
+                    next
+                </Button>
+            </WrapperStyled>
         )
     }
 
     if (answersLoader) {
-        return <h1>loading...</h1>
+        return <h1>Loading...</h1>
     }
 
     if (questions.length === 0) {

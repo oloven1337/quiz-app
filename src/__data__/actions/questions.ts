@@ -23,72 +23,72 @@ export const getQuestions = (numberQuestion: number, category: string, difficult
             type: types.FETCHING_QUESTIONS_REQUEST
         })
 
-        const {data} = await axios.get(t)
-        console.log('data', data)
+        // const {data} = await axios.get(t)
+        // console.log('data', data)
 
-        // const arr = [
-        //     {
-        //         category: "Sports",
-        //         correct_answer: "Duck",
-        //         difficulty: "medium",
-        //         incorrect_answers: ['Bye', 'Beamer', 'Carry'],
-        //         question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
-        //     }, {
-        //         category: "Sports",
-        //         correct_answer: "Duck",
-        //         difficulty: "medium",
-        //         incorrect_answers: ['Bye', 'Beamer', 'Carry'],
-        //         question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
-        //     }, {
-        //         category: "Sports",
-        //         correct_answer: "Duck",
-        //         difficulty: "medium",
-        //         incorrect_answers: ['Bye', 'Beamer', 'Carry'],
-        //         question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
-        //     }, {
-        //         category: "Sports",
-        //         correct_answer: "Duck",
-        //         difficulty: "medium",
-        //         incorrect_answers: ['Bye', 'Beamer', 'Carry'],
-        //         question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
-        //     }, {
-        //         category: "Sports",
-        //         correct_answer: "Duck",
-        //         difficulty: "medium",
-        //         incorrect_answers: ['Bye', 'Beamer', 'Carry'],
-        //         question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
-        //     }, {
-        //         category: "Sports",
-        //         correct_answer: "Duck",
-        //         difficulty: "medium",
-        //         incorrect_answers: ['Bye', 'Beamer', 'Carry'],
-        //         question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
-        //     }, {
-        //         category: "Sports",
-        //         correct_answer: "Duck",
-        //         difficulty: "medium",
-        //         incorrect_answers: ['Bye', 'Beamer', 'Carry'],
-        //         question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
-        //     }, {
-        //         category: "Sports",
-        //         correct_answer: "Duck",
-        //         difficulty: "medium",
-        //         incorrect_answers: ['Bye', 'Beamer', 'Carry'],
-        //         question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
-        //     }, {
-        //         category: "Sports",
-        //         correct_answer: "Duck",
-        //         difficulty: "medium",
-        //         incorrect_answers: ['Bye', 'Beamer', 'Carry'],
-        //         question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
-        //     },
-        // ]
+        const arr = [
+            {
+                category: "Sports",
+                correct_answer: "Duck",
+                difficulty: "medium",
+                incorrect_answers: ['Bye', 'Beamer', 'Carry'],
+                question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
+            }, {
+                category: "Sports",
+                correct_answer: "Duck",
+                difficulty: "medium",
+                incorrect_answers: ['Bye', 'Beamer', 'Carry'],
+                question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
+            }, {
+                category: "Sports",
+                correct_answer: "Duck",
+                difficulty: "medium",
+                incorrect_answers: ['Bye', 'Beamer', 'Carry'],
+                question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
+            }, {
+                category: "Sports",
+                correct_answer: "Duck",
+                difficulty: "medium",
+                incorrect_answers: ['Bye', 'Beamer', 'Carry'],
+                question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
+            }, {
+                category: "Sports",
+                correct_answer: "Duck",
+                difficulty: "medium",
+                incorrect_answers: ['Bye', 'Beamer', 'Carry'],
+                question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
+            }, {
+                category: "Sports",
+                correct_answer: "Duck",
+                difficulty: "medium",
+                incorrect_answers: ['Bye', 'Beamer', 'Carry'],
+                question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
+            }, {
+                category: "Sports",
+                correct_answer: "Duck",
+                difficulty: "medium",
+                incorrect_answers: ['Bye', 'Beamer', 'Carry'],
+                question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
+            }, {
+                category: "Sports",
+                correct_answer: "Duck",
+                difficulty: "medium",
+                incorrect_answers: ['Bye', 'Beamer', 'Carry'],
+                question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
+            }, {
+                category: "Sports",
+                correct_answer: "Duck",
+                difficulty: "medium",
+                incorrect_answers: ['Bye', 'Beamer', 'Carry'],
+                question: "What cricketing term denotes a batsman being dismissed with a score of zero?"
+            },
+        ]
 
 
         dispatch({
             type: types.FETCHING_QUESTIONS_SUCCESS,
             //@ts-ignore
-            payload: data.results
+            payload: arr
         })
 
     } catch (error) {
