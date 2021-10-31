@@ -44,6 +44,13 @@ export const question = (state = initialState, action: IAction) => {
                 isFetching: false
             }
         }
+
+        case types.CLEAR_QUESTIONS: {
+            return {
+                ...state,
+                questions: []
+            }
+        }
         default: {
             return {...state}
         }

@@ -1,5 +1,6 @@
 import styled from "styled-components";
-// #322736
+import {Button} from "@mui/material";
+
 export const WrapperStyled = styled.div`
   background-color: #322736;
   min-height: 300px;
@@ -17,4 +18,10 @@ export const WrapperStyled = styled.div`
 
 export const WrapperAnswersItem = styled.div`
   margin: 6px;
+`
+
+export const ButtonStyled = styled(Button)`
+  margin: 10px;
+  color: red;
+  background-color: red;
 `

@@ -1,4 +1,4 @@
-import {SAVE_ANSWER} from "../action-types";
+import {SAVE_ANSWER, CLEAR_ANSWER} from "../action-types";
 import {IAnswer} from "../types/IAnswer";
 
 export interface IAction {
@@ -15,10 +15,17 @@ export const answers = (state = initialState, action: IAction) => {
         case SAVE_ANSWER: {
             const {id} = action.payload!
             const copyState = JSON.parse(JSON.stringify(state))
-            copyState.answers[id] = action.payload!
+            copyState.answers[id] = action.payload
 
             return {
                 ...copyState,
+            }
+        }
+        case CLEAR_ANSWER: {
+            console.log(state.answers)
+            return {
+                ...state,
+                answers: []
             }
         }
         default: {

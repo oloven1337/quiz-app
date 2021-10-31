@@ -2,7 +2,8 @@ import React from 'react';
 import {useSelector} from "react-redux";
 
 import {answersSelector} from "../../__data__/selectors/answers";
-import {Wrapper, WrapperItem} from "./style";
+
+import {Wrapper, ItemStyled, TitleStyled} from "./style";
 
 interface Answers {
     id: number,
@@ -14,26 +15,25 @@ interface Answers {
 export const Result: React.FC = () => {
     const [state, setState] = React.useState(0)
     //@ts-ignore
-    const answers: Answers[] = useSelector((state) => state.answers.answers)
-    // const answers: Answers[] = useSelector(answersSelector())
+    const answers: Answers[] = useSelector(answersSelector)
     let correctAnswersCount: number = 0
-
     React.useEffect(() => {
         setState(correctAnswersCount)
     }, [correctAnswersCount])
 
     return (
         <Wrapper>
-            {state}
+            <TitleStyled>
+                Количество правильных ответов: {state}
+            </TitleStyled>
             {answers.map(({id, title, userAnswer, correctAnswer}) => {
                 const right = userAnswer === correctAnswer
                 if (right) {
-                    console.log(correctAnswersCount)
                     correctAnswersCount = correctAnswersCount + 1
                 }
 
                 return (
-                    <WrapperItem key={id} right={right}>
+                    <ItemStyled key={id} right={right}>
                         <div>
                             <span>Вопрос номер: {id + 1}</span>
                             <div>{title}</div>
@@ -46,7 +46,7 @@ export const Result: React.FC = () => {
                             <span>Правильный ответ: </span>
                             <span>{correctAnswer}</span>
                         </div>
-                    </WrapperItem>
+                    </ItemStyled>
                 )
             })}
         </Wrapper>

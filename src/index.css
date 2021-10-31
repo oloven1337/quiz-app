@@ -1,6 +1,7 @@
 body {
     background: rgb(28,23,25);
     background: linear-gradient(90deg, rgba(28,23,25,1) 0%, rgba(26,17,22,1) 61%, rgba(30,24,25,1) 100%);
+    font-family: "Roboto Light", sans-serif;
 }
 
 * {

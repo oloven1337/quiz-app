@@ -1,4 +1,4 @@
-import {SAVE_ANSWER} from "../action-types";
+import {CLEAR_ANSWER, SAVE_ANSWER} from "../action-types";
 
 interface IAnswer {
     id: number,
@@ -11,5 +11,11 @@ export const setAnswers = (answer: IAnswer) => {
     return ({
         type: SAVE_ANSWER,
         payload: answer
+    })
+}
+
+export const clearAnswers = () => {
+    return ({
+        type: CLEAR_ANSWER
     })
 }

@@ -1,21 +1,33 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 
-const modalRoot = document.getElementById('modal-root')
+import {ContentModalStyled, WrapperModalStyled} from "./style";
 
-export const Modal = () => {
-    const r = document.createElement('div')
+const modalRoot = document.getElementById('modal')
+
+export const Modal: React.FC = ({children}) => {
+    const portalElem = document.createElement('div')
 
     React.useEffect(() => {
-        //@ts-ignore
-        modalRoot.appendChild(r)
+        modalRoot?.appendChild(portalElem)
         return () => {
-            //@ts-ignore
-            modalRoot.removeChild(r)
+            modalRoot?.removeChild(portalElem)
         }
-    }, [])
+    }, [portalElem])
+
+    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+        //@ts-ignore
+        modal.setModal(!modal.modal)
+        e.stopPropagation()
+    }
 
     return (
-        ReactDOM.createPortal(<h1>Portal</h1>, r)
+        ReactDOM.createPortal((
+            <WrapperModalStyled onClick={(e) => handleClick(e)}>
+                <ContentModalStyled>
+                    {children}
+                </ContentModalStyled>
+            </WrapperModalStyled>
+        ), portalElem)
     )
 }

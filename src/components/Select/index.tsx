@@ -8,7 +8,6 @@ interface Props {
 
 export const Select: React.FC<Props> = ({arr, handleChange}) => {
     return (
-        //@ts-ignore
         <WrapperStyled>
             {/*//@ts-ignore*/}
             <select onChange={handleChange}>
