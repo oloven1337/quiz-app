@@ -5,11 +5,11 @@ import {useSelector} from "react-redux";
 import {Records} from "./pages/Records";
 import {Quiz} from "./pages/Quiz";
 import {Question} from "./pages/Question";
-import {questionsSelector} from "./__data__/selectors/questions";
 import {Header} from "./components/Header";
 
 export function App() {
-    const questions = useSelector(questionsSelector)
+    //@ts-ignore
+    const questions = useSelector(state => state.questions.questions)
 
     return (
         <>

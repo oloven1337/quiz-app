@@ -1,9 +1,11 @@
 import React from 'react';
 import {Link} from "react-router-dom";
 import {InputLabel, MenuItem, Button} from "@mui/material";
-
 import {useDispatch} from "react-redux";
-import {clearQuestions, getQuestions} from "../../__data__/actions/questions";
+
+import {clearQuestions, fetchQuestions} from "../../__data__/questionSlice";
+import {clearAnswers} from "../../__data__/answersSlice";
+import {FetchQuestionsTypes} from '../../models/FetchQuestionsTypes'
 
 import {
     FormControlStyled,
@@ -13,7 +15,7 @@ import {
     WrapperSettingsQuizStyled,
     WrapperStyled
 } from "./style";
-import {clearAnswers} from "../../__data__/actions/answers";
+
 
 export const Quiz: React.FC = () => {
     const [selectedValue, setSelectedValue] = React.useState(10);
@@ -47,7 +49,13 @@ export const Quiz: React.FC = () => {
         if (selectedValue && categories && difficulty) {
             const categoryName = Object.keys(categoryValues).indexOf(categories)
             const categoryId = Object.values(categoryValues)[categoryName]
-            dispatch(getQuestions(selectedValue, categoryId, difficulty))
+            console.log(selectedValue, categoryId)
+            const obj: FetchQuestionsTypes = {
+                numberQuestion: selectedValue,
+                category: categoryId,
+                difficulty
+            }
+            dispatch(fetchQuestions(obj))
         }
     }
 

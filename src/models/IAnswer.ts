@@ -1,6 +1,6 @@
 export interface IAnswer {
     id: number,
     title: string,
-    userAnswer: string,
+    userAnswer: string | null,
     correctAnswer: string
 }

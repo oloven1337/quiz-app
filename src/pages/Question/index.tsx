@@ -3,16 +3,10 @@ import {useDispatch, useSelector} from "react-redux";
 
 import {Result} from "../Result";
 import {RadioButton} from "../../components/RadioButton";
-import {setAnswers} from "../../__data__/actions/answers";
-import {answersLoaderSelector} from "../../__data__/selectors/questions";
+import {setAnswers} from "../../__data__/answersSlice";
 
 import {ButtonStyled, WrapperAnswersItem, WrapperStyled} from "./style";
-
-interface IQuestion {
-    question: string,
-    correct_answer: string,
-    incorrect_answers: string[]
-}
+import {IQuestion} from "../../models/IQuestion";
 
 interface IProps {
     questions: IQuestion[]
@@ -23,7 +17,8 @@ export const Question: React.FC<IProps> = ({questions}) => {
     const [userAnswer, setUserAnswer] = React.useState<string>('')
 
     const dispatch = useDispatch()
-    const answersLoader = useSelector(answersLoaderSelector())
+    //@ts-ignore
+    const loader = useSelector(state => state.questions.isFetching)
 
     React.useEffect(() => {
     }, [countQuestions])
@@ -65,7 +60,7 @@ export const Question: React.FC<IProps> = ({questions}) => {
         )
     }
 
-    if (answersLoader) {
+    if (loader) {
         return <h1>Loading...</h1>
     }
 

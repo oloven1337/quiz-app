@@ -1,21 +1,23 @@
 import React from 'react';
 import {useSelector} from "react-redux";
 
-import {answersSelector} from "../../__data__/selectors/answers";
-
 import {Wrapper, ItemStyled, TitleStyled} from "./style";
 
-interface Answers {
-    id: number,
-    title: string,
-    userAnswer: string | null,
-    correctAnswer: string
+interface IState {
+    answers: {
+        answers: {
+            id: number,
+            title: string,
+            userAnswer: string | null,
+            correctAnswer: string
+        }
+    }
 }
 
 export const Result: React.FC = () => {
     const [state, setState] = React.useState(0)
     //@ts-ignore
-    const answers: Answers[] = useSelector(answersSelector)
+    const answers: IAnswers[] = useSelector((state) => state.answers.answers)
     let correctAnswersCount: number = 0
     React.useEffect(() => {
         setState(correctAnswersCount)

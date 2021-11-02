@@ -1,13 +1,17 @@
-import {createStore, applyMiddleware, combineReducers} from 'redux'
-import {composeWithDevTools} from 'redux-devtools-extension';
-import thunk from "redux-thunk";
-
-import {question} from "./reducers/questions";
-import {answers} from './reducers/answers'
+import {configureStore} from '@reduxjs/toolkit'
+import {combineReducers} from "redux";
+import {answersSlice} from "./answersSlice";
+import {questionsSlice} from "./questionSlice";
 
 const rootReducer = combineReducers({
-    question,
-    answers
+    answers: answersSlice.reducer,
+    questions: questionsSlice.reducer
 })
 
-export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
+export const store = configureStore({
+    reducer: rootReducer
+})
+
+// export type RootState = ReturnType<typeof rootReducer>
+// export type AppStore = ReturnType<typeof setupStore>
+// export type AppDispatch = AppStore['dispatch']
