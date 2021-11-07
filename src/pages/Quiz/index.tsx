@@ -3,9 +3,9 @@ import {Link} from "react-router-dom";
 import {InputLabel, MenuItem, Button} from "@mui/material";
 import {useDispatch} from "react-redux";
 
-import {clearQuestions, fetchQuestions} from "../../__data__/questionSlice";
+import {clearQuestions, fetchQuestions} from "../../__data__/questionsSlice";
 import {clearAnswers} from "../../__data__/answersSlice";
-import {FetchQuestionsTypes} from '../../models/FetchQuestionsTypes'
+import {SelectChangeEvent} from '@mui/material/Select';
 
 import {
     FormControlStyled,
@@ -19,24 +19,24 @@ import {
 
 export const Quiz: React.FC = () => {
     const [selectedValue, setSelectedValue] = React.useState(10);
-    const [categories, setCategories] = React.useState<string>('Sports')
-    const [difficulty, setDifficulty] = React.useState<string>('Easy')
+    const [categories, setCategories] = React.useState('Sports')
+    const [difficulty, setDifficulty] = React.useState('Easy')
 
     const dispatch = useDispatch()
 
     const handleChangeSelected = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedValue(+e.target.value)
+        setSelectedValue(Number(e.target.value))
     }
 
-    const handleChangeCategories = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCategories(e.target.value)
+    const handleChangeCategories = (e: SelectChangeEvent<unknown>) => {
+        setCategories(e.target.value as string)
     }
 
-    const handleChangeDifficulty = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setDifficulty(e.target.value)
+    const handleChangeDifficulty = (e: SelectChangeEvent<unknown>) => {
+        setDifficulty(e.target.value as string)
     }
 
-    const categoryValues: object = {
+    const categoryValues = {
         Sports: 21,
         Art: 25,
         History: 23,
@@ -50,12 +50,11 @@ export const Quiz: React.FC = () => {
             const categoryName = Object.keys(categoryValues).indexOf(categories)
             const categoryId = Object.values(categoryValues)[categoryName]
             console.log(selectedValue, categoryId)
-            const obj: FetchQuestionsTypes = {
+            dispatch(fetchQuestions({
                 numberQuestion: selectedValue,
                 category: categoryId,
                 difficulty
-            }
-            dispatch(fetchQuestions(obj))
+            }))
         }
     }
 
@@ -72,7 +71,6 @@ export const Quiz: React.FC = () => {
                             name="countQuestion"
                             size="small"
                             value={10}
-                            sx={{color: 'white'}}
                         />
                         <span>20</span>
                         <RadioStyled
@@ -81,7 +79,6 @@ export const Quiz: React.FC = () => {
                             name="countQuestion"
                             size="small"
                             value={20}
-                            sx={{color: 'white'}}
                         />
                         <span>30</span>
                         <RadioStyled
@@ -90,7 +87,6 @@ export const Quiz: React.FC = () => {
                             name="countQuestion"
                             size="small"
                             value={30}
-                            sx={{color: 'white'}}
                         />
                     </div>
                 </WrapperStyled>
@@ -100,17 +96,11 @@ export const Quiz: React.FC = () => {
                         <FormControlStyled>
                             <InputLabel id="demo-controlled-open-select-label">Категория</InputLabel>
                             <SelectStyled
+                                onChange={handleChangeCategories}
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value={categories}
                                 label="Категория"
-                                //@ts-ignore
-                                onChange={handleChangeCategories}
-                                sx={{
-                                    color: '#1976d2', "&:before": {
-                                        borderColor: "red"
-                                    }
-                                }}
                             >
                                 <MenuItem value="Sports">Sports</MenuItem>
                                 <MenuItem value="Art">Art</MenuItem>
@@ -126,13 +116,11 @@ export const Quiz: React.FC = () => {
                         <FormControlStyled>
                             <InputLabel id="demo-controlled-open-select-label">Сложность</InputLabel>
                             <SelectStyled
+                                onChange={handleChangeDifficulty}
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
                                 value={difficulty}
                                 label="Сложность"
-                                //@ts-ignore
-                                onChange={handleChangeDifficulty}
-                                sx={{color: '#1976d2'}}
                             >
                                 <MenuItem value="Easy">Easy</MenuItem>
                                 <MenuItem value="Medium">Medium</MenuItem>

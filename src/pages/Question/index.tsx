@@ -1,66 +1,56 @@
-import React from 'react';
-import {useDispatch, useSelector} from "react-redux";
+import React, { useCallback } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 
-import {Result} from "../Result";
-import {RadioButton} from "../../components/RadioButton";
-import {setAnswers} from "../../__data__/answersSlice";
+import { Result } from "../Result";
 
-import {ButtonStyled, WrapperAnswersItem, WrapperStyled} from "./style";
-import {IQuestion} from "../../models/IQuestion";
+import { RadioButton } from "../../components/RadioButton";
+import { setAnswers } from "../../__data__/answersSlice";
+import { IQuestion } from "../../models/IQuestion";
+import { hasErrorSelector, isFetchingSelector } from '../../__data__/selectors/questions';
+
+import { ButtonStyled, WrapperAnswersItem, WrapperStyled } from "./style";
 
 interface IProps {
     questions: IQuestion[]
 }
 
-export const Question: React.FC<IProps> = ({questions}) => {
-    const [countQuestions, setCountQuestions] = React.useState<number>(0)
-    const [userAnswer, setUserAnswer] = React.useState<string>('')
+export const Question: React.FC<IProps> = ({ questions }) => {
+    const [countQuestions, setCountQuestions] = React.useState(0)
+    const [userAnswer, setUserAnswer] = React.useState('')
 
     const dispatch = useDispatch()
-    //@ts-ignore
-    const loader = useSelector(state => state.questions.isFetching)
+    const isFetching = useSelector(isFetchingSelector)
+    const hasError = useSelector(hasErrorSelector)
 
     React.useEffect(() => {
     }, [countQuestions])
+    
+    const handleSelection = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+        setUserAnswer(event.target.value)
+    }, [])
 
-    if (countQuestions < questions.length) {
+    const handlerSetCount = useCallback(() => {
         const {
             question: questionTitle,
-            incorrect_answers: incorrectAnswers,
             correct_answer: correctAnswer
         } = questions[countQuestions]
 
-        const answers = [...incorrectAnswers, correctAnswer]
+        dispatch(setAnswers({
+            id: countQuestions,
+            title: questionTitle,
+            userAnswer,
+            correctAnswer
+        }))
+        const value = countQuestions + 1
+        const nextCount = value < questions.length ? value : questions.length
+        setCountQuestions(nextCount)
+    }, [dispatch, countQuestions, userAnswer, questions])
 
-        const handleSelection = (eValue: string) => {
-            setUserAnswer(eValue)
-        }
-
-        const handlerSetCount = (questionTitle: string) => {
-            dispatch(setAnswers({id: countQuestions, title: questionTitle, userAnswer, correctAnswer}))
-            const value = countQuestions + 1
-            const nextCount = value < questions.length ? value : questions.length
-            setCountQuestions(nextCount)
-        }
-        return (
-            <WrapperStyled>
-                <h4>{questionTitle}</h4>
-                <WrapperAnswersItem>
-                    {answers.map(answer => (
-                        <div key={answer}
-                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleSelection(e.target.value)}>
-                            <RadioButton name="answers" key={answer} value={answer}/>
-                        </div>
-                    ))}
-                </WrapperAnswersItem>
-                <ButtonStyled variant="contained" color="success" onClick={() => handlerSetCount(questionTitle)}>
-                    Дальше
-                </ButtonStyled>
-            </WrapperStyled>
-        )
+    if (hasError) {
+        return <h1>Произошла ошибка</h1>
     }
 
-    if (loader) {
+    if (isFetching) {
         return <h1>Loading...</h1>
     }
 
@@ -70,7 +60,31 @@ export const Question: React.FC<IProps> = ({questions}) => {
         )
     }
 
-    return (
-        <Result/>
-    )
+    if (countQuestions < questions.length) {
+        const {
+            question: questionTitle,
+            incorrect_answers: incorrectAnswers,
+            correct_answer: correctAnswer
+        } = questions[countQuestions]
+
+        const answers = [...incorrectAnswers, correctAnswer]
+        return (
+            <WrapperStyled>
+                <h4>{questionTitle}</h4>
+                <WrapperAnswersItem>
+                    {answers.map(answer => (
+                        <div key={answer} onChange={handleSelection}>
+                            <RadioButton name="answers" key={answer} value={answer} />
+                        </div>
+                    ))}
+                </WrapperAnswersItem>
+                <ButtonStyled variant="contained" color="success" onClick={handlerSetCount}>
+                    Дальше
+                </ButtonStyled>
+            </WrapperStyled>
+        )
+    } else {
+
+        return <Result />
+    }
 }

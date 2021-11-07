@@ -2,20 +2,18 @@ import styled from "styled-components";
 import {Select, FormControl, Radio} from "@mui/material";
 
 export const WrapperSettingsQuizStyled = styled.div`
-  padding: 20px 40px;
-  background-color: #322736;
+  padding: 10px 15px;
+  background-color: ${props => props.theme.backgroundColor};
   text-align: left;
   margin: 0 auto;
   max-width: 600px;
   border-radius: 5px;
-  color: white;
-
+  color: ${props => props.theme.color || 'white'}
 `
 export const WrapperStyled = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  margin-left: 20px;
   padding: 6px;
 
   span {
@@ -29,9 +27,10 @@ export const WrapperStyled = styled.div`
 export const TextStyled = styled.h3`
   margin: 0 10px 0 0;
 `
+
 export const SelectStyled = styled(Select)`
   div {
-    color: white;
+    color: ${props => props.theme.color};
   }
 `
 export const FormControlStyled = styled(FormControl)`
@@ -41,6 +40,11 @@ export const FormControlStyled = styled(FormControl)`
 `
 
 export const RadioStyled = styled(Radio)`
-  color: #1976d2;
+  color: red;
+  background-color: red;
   border-color: red;
+
+  &:not(:checked) {
+    color: ${props => props.theme.color};
+  }
 `

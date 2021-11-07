@@ -6,7 +6,7 @@ interface Props {
     handleChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const Select: React.FC<Props> = ({arr, handleChange}) => {
+export const Select: React.FC<Props> = ({arr = [], handleChange}) => {
     return (
         <WrapperStyled>
             {/*//@ts-ignore*/}

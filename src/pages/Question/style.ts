@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {Button} from "@mui/material";
 
 export const WrapperStyled = styled.div`
-  background-color: #322736;
+  background-color: ${props => props.theme.backgroundColor};
   min-height: 300px;
   border-radius: 5px;
   padding: 4px;
@@ -10,7 +10,7 @@ export const WrapperStyled = styled.div`
   h4 {
     margin: 0;
     padding: 10px;
-    color: white;
+    color: ${props => props.theme.color};
     font-size: 20px;
   }
 

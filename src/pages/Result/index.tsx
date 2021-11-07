@@ -1,32 +1,31 @@
 import React from 'react';
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+
+import {answersSelector} from '../../__data__/selectors/answers';
+import {putToLocalStorage} from '../../__data__/recordsSlice'
 
 import {Wrapper, ItemStyled, TitleStyled} from "./style";
 
-interface IState {
-    answers: {
-        answers: {
-            id: number,
-            title: string,
-            userAnswer: string | null,
-            correctAnswer: string
-        }
-    }
-}
-
 export const Result: React.FC = () => {
-    const [state, setState] = React.useState(0)
-    //@ts-ignore
-    const answers: IAnswers[] = useSelector((state) => state.answers.answers)
-    let correctAnswersCount: number = 0
+    const [correctAnswers, setCorrectAnswers] = React.useState(0)
+    const answers = useSelector(answersSelector)
+    const dispatch = useDispatch()
+    let correctAnswersCount = 0
+
     React.useEffect(() => {
-        setState(correctAnswersCount)
+        setCorrectAnswers(correctAnswersCount)
     }, [correctAnswersCount])
+
+    React.useEffect(() => {
+        return () => {
+            dispatch(putToLocalStorage({correctAnswersCount, answers: answers.length}))
+        }
+    }, [dispatch, correctAnswersCount, answers.length])
 
     return (
         <Wrapper>
             <TitleStyled>
-                Количество правильных ответов: {state}
+                Количество правильных ответов: {correctAnswers}
             </TitleStyled>
             {answers.map(({id, title, userAnswer, correctAnswer}) => {
                 const right = userAnswer === correctAnswer

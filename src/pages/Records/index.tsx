@@ -1,9 +1,33 @@
 import React from 'react';
+import {useSelector} from "react-redux";
 
-export const Records = () => {
+import {recordsSelector} from "../../__data__/selectors/records";
+
+import {CardStyled, TitleStyled} from "./style";
+import {CardContent, Typography} from "@mui/material";
+
+export const Records: React.FC = () => {
+    const records = useSelector(recordsSelector)
+
     return (
-            <h1>
+        <>
+            <TitleStyled>
                 Records
-            </h1>
+            </TitleStyled>
+            {
+                records.map((record) => (
+                    <CardStyled>
+                        <CardContent>
+                            <Typography color="text.secondary" gutterBottom>
+                                {record.date}
+                            </Typography>
+                            <Typography variant="h6" component="div">
+                                Вопросов: {record.correctAnswersCount} / {record.answers}
+                            </Typography>
+                        </CardContent>
+                    </CardStyled>
+                ))
+            }
+        </>
     );
 };

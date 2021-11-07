@@ -24,7 +24,7 @@ export const RadioStyled = styled.label`
 
     span {
       display: flex;
-      color: white;
+      color: ${props => props.theme.color};
       align-items: center;
       padding: 0.375em 0.75em 0.375em 0.375em;
       border-radius: 99em; // or something higher...
@@ -38,9 +38,10 @@ export const RadioStyled = styled.label`
         display: flex;
         flex-shrink: 0;
         content: "";
-        background-color: #fff;
-        width: 1.5em;
-        height: 1.5em;
+        background-color: white;
+        border: 1px solid #b0afaf;
+        width: 1.2em;
+        height: 1.2em;
         border-radius: 50%;
         margin-right: 0.375em;
         transition: 0.25s ease;

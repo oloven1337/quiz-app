@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+export const Wrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
 export const WrapperHeaderStyled = styled.ul`
   padding: 0;
   max-width: 300px;
@@ -11,7 +16,8 @@ export const WrapperHeaderStyled = styled.ul`
     text-decoration: none;
     font-weight: bold;
     font-size: 24px;
-    color: white;
+    margin: 0 10px;
+    color: ${props => props.theme.color};
 
     &:hover {
       transform: scale(1.05);
